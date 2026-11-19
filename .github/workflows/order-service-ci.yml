@@ -1,0 +1,54 @@
+
+name: Order Service CI
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'application/order-service/**'
+      - '.github/workflows/order-service-ci.yml'
+
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: maven
+          cache-dependency-path: application/order-service/pom.xml
+
+      - name: Maven build and tests
+        working-directory: application/order-service
+        run: mvn -B clean verify
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: ./application/order-service
+          file: ./application/order-service/Dockerfile
+          push: true
+          tags: |
+            28312/order-service:latest
+            28312/order-service:sha-${{ github.sha }}

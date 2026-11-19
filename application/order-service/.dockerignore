@@ -1,0 +1,8 @@
+target/
+.git/
+.vscode/
+.idea/
+.env
+.env.*
+*.log
+MongoTlsCheck.java

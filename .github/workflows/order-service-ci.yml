@@ -25,6 +25,10 @@ jobs:
           java-version: '21'
           cache: maven
           cache-dependency-path: application/order-service/pom.xml
+      - name: Check Spring Boot parent POM availability
+        run: |
+          curl -fIL --retry 3 --retry-all-errors \
+            https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/4.1.2/spring-boot-starter-parent-4.1.2.pom
 
       - name: Maven Build and Test
         working-directory: application/order-service

@@ -24,7 +24,7 @@ variable "kubernetes_version" {
   default = "1.37"
 }
 variable "eks_public_access_cidrs" {
-  description = "Trusted admin public IP CIDRs, e.g. ["203.0.113.10/32"]. Required when enabling EKS."
+  description = "Trusted admin public IP CIDRs, e.g. ["203.0.113.10/32"], Required when enabling EKS."
   type        = list(string)
   default     = []
 }

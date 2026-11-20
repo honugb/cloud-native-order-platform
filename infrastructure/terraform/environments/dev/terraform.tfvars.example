@@ -1,0 +1,14 @@
+aws_region = "ap-south-1"
+project    = "cnop"
+environment = "dev"
+
+# Phase 3A: create only VPC/subnets/IGW/routes/ECR, avoiding EKS and NAT hourly fees.
+enable_eks = false
+
+# Phase 3B: change to true when ready for EKS + NAT charges.
+# Supply your current external public IP/32 before enabling EKS.
+eks_public_access_cidrs = []
+
+kubernetes_version = "1.37"
+node_instance_types = ["t3.medium"]
+node_desired_size = 1

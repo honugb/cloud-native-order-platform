@@ -13,6 +13,7 @@ permissions:
 jobs:
   build-test-push:
     runs-on: ubuntu-latest
+    environment: Production
 
     steps:
       - name: Checkout source
